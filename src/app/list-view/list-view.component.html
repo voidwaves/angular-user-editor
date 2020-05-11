@@ -1,0 +1,8 @@
+<div *ngIf="userList.length">
+    <h2>A list of users:</h2>
+    <button routerLink="/add">add user</button>
+    <ul *ngFor="let user of userList">
+      <li>{{user.name}}</li>
+      <button routerLink="/details/{{user.id}}">details</button>
+    </ul>
+</div>

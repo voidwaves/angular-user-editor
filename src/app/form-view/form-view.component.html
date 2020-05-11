@@ -1,0 +1,8 @@
+<h2>add a new user</h2>
+<div>
+    <input [(ngModel)]="newUser.name" type="text" placeholder="name">
+    <input [(ngModel)]="newUser.age" type="number">
+    <input [(ngModel)]="newUser.city" type="text" placeholder="city">
+    <button (click)="addUser(); goBack()">add</button>
+    <button (click)="goBack()">back</button>
+</div>
