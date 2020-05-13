@@ -5,6 +5,7 @@
 /tmp
 /out-tsc
 /spring/build
+/spring/.gradle
 
 # Only exists if Bazel was run
 /bazel-out

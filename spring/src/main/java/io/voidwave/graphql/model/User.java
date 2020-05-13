@@ -1,15 +1,24 @@
 package io.voidwave.graphql.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.UUID;
 
+@Entity
 public class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String name;
     private int age;
     private String city;
 
-    public User(int id, String name, int age, String city) {
-        this.id = id;
+    public User() {}
+
+    public User(String name, int age, String city) {
         this.name = name;
         this.age = age;
         this.city = city;

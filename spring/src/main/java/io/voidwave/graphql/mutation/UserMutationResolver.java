@@ -16,15 +16,11 @@ public class UserMutationResolver implements GraphQLMutationResolver {
         this.userService = userService;
     }
 
-    public User addUser(int id, String name, int age, String city) {
-        return userService.addUser(id, name, age, city);
+    public User addUser(String name, int age, String city) {
+        return userService.addUser(name, age, city);
     }
 
     public Optional<User> removeUser(int id) {
         return userService.removeUser(id);
-    }
-
-    public ArrayList<User> init() {
-        return userService.init();
     }
 }
