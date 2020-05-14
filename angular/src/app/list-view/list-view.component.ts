@@ -12,11 +12,10 @@ export class ListViewComponent implements OnInit {
   constructor(private userService: UserService) { }
 
   getUsers() {
-    this.userService.getUsers().subscribe(users => this.userList = users)
+    this.userService.getUsers().subscribe(result => this.userList = result.data.allUsers)
   }
 
   ngOnInit(): void {
     this.getUsers()
   }
-
 }

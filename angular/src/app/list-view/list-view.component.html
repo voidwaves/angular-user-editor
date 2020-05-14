@@ -1,4 +1,4 @@
-<div *ngIf="userList.length">
+<div *ngIf="userList.length > 0">
     <h2>A list of users:</h2>
     <button routerLink="/add">add user</button>
     <ul *ngFor="let user of userList">

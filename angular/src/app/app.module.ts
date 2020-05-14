@@ -7,6 +7,8 @@ import { AppComponent } from './app.component';
 import { DetailViewComponent } from './detail-view/detail-view.component';
 import { ListViewComponent } from './list-view/list-view.component';
 import { FormViewComponent } from './form-view/form-view.component';
+import { GraphQLModule } from './graphql.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { FormViewComponent } from './form-view/form-view.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    GraphQLModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

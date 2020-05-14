@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
 import { of, Observable } from 'rxjs';
+import { Apollo } from 'apollo-angular';
+import gql from 'graphql-tag';
+import { ApolloQueryResult } from 'apollo-client';
+import { FetchResult } from 'apollo-link';
 
 export interface User {
   id: number
@@ -8,44 +12,88 @@ export interface User {
   city: string
 }
 
+const queryAllUsers = gql`
+  query {
+    allUsers {
+      id
+      name
+      age
+      city
+    }
+  }
+`
+
+const queryUserById = gql`
+  query user($id: Int) {
+    user(id: $id) {
+      id
+      name
+      age
+      city
+    }
+  }
+`
+
+const removeUserMutation = gql`
+  mutation removeUser($id: Int) {
+    removeUser(id: $id) {
+      id
+      name
+      age
+      city
+    }
+  }
+`
+
+const addUserMutation = gql`
+  mutation addUser($name: String, $age: Int, $city: String) {
+    addUser(
+      name: $name
+      age: $age
+      city: $city
+    ) {
+      id
+      name
+      age
+      city
+    }
+  }
+`
+
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  listOfUsers: User[] = [
-    {id: 1, name: 'Josh', age: 34, city: 'Seattle'},
-    {id: 2, name: 'Melinda', age: 45, city: 'New York'},
-    {id: 3, name: 'Yoko', age: 28, city: 'Tokyo'},
-    {id: 4, name: 'Jonas', age: 22, city: 'Hamburg'},
-    {id: 5, name: 'Tom', age: 56, city: 'London'},
-  ]
 
-  getUsers(): Observable<User[]> {
-    return of(this.listOfUsers)
+  constructor(private apollo: Apollo){}
+
+  getUsers(): Observable<ApolloQueryResult<{allUsers: User[]}>> {
+    return this.apollo.watchQuery<{allUsers: User[]}>({
+      query: queryAllUsers
+    })
+    .valueChanges
   }
 
-  getUserById(id: number): Observable<User> {
-    const user = this.listOfUsers.find(user => user.id === id)
-    return of(user)
+  getUserById(id: number): Observable<ApolloQueryResult<{user: User}>> {
+    console.log(id)
+    return this.apollo.watchQuery<{user: User}>({
+      query: queryUserById,
+      variables: {id}
+    })
+    .valueChanges
   }
   
-  deleteUserById(id: number): Observable<User[]> {
-    this.listOfUsers = this.listOfUsers.filter(user => user.id !== id)
-    return of(this.listOfUsers)
-  }
-
-  addUser(user: User): Observable<User[]> {
-    this.listOfUsers = [ ...this.listOfUsers, {...user, id: this.generateId()}]
-    return of(this.listOfUsers)
-  }
-
-  generateId(): number {
-    let highestId = 0
-    this.listOfUsers.forEach(user => {
-      if(user.id > highestId){
-        highestId = user.id
-      }
+  deleteUserById(id: number): Observable<FetchResult<User[]>> {
+    return this.apollo.mutate<User[]>({
+      mutation: removeUserMutation,
+      variables: {id}
     })
-    return highestId + 1
+  }
+
+  addUser(name: string, age: number, city: string): Observable<FetchResult<User>> {
+    return this.apollo.mutate<User>({
+      mutation: addUserMutation,
+      variables: {name, age, city}
+    })
   }
 }

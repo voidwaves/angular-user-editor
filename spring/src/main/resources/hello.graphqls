@@ -12,7 +12,7 @@ type Query {
 }
 
 type Mutation {
-    addUser(name: String!, age: Int!, city: String!): User!
-    removeUser(id: Int!): User
+    addUser(name: String, age: Int, city: String): User
+    removeUser(id: Int): User
 }
 

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService, User } from '../user.service';
-import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common'
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-detail-view',
@@ -15,12 +14,12 @@ export class DetailViewComponent implements OnInit {
   constructor(
     private userService: UserService,
     private route: ActivatedRoute,
-    private location: Location
+    private router: Router
   ){}
 
   getUser() {
     const id = +this.route.snapshot.paramMap.get('id')
-    this.userService.getUserById(id).subscribe(user => this.user = user)
+    this.userService.getUserById(id).subscribe(result => this.user = result.data.user)
   }
 
   deleteUser(user: User) {
@@ -32,6 +31,6 @@ export class DetailViewComponent implements OnInit {
   }
 
   goBack() {
-    this.location.back()
+    this.router.navigateByUrl('/list')
   }
 }

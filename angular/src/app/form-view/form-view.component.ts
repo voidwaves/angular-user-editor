@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common'
+import { Router } from '@angular/router'
 import { UserService } from '../user.service';
 
 @Component({
@@ -18,15 +18,15 @@ export class FormViewComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private location: Location
+    private router: Router
   ){}
 
   addUser() {
-    this.userService.addUser(this.newUser)
+    this.userService.addUser(this.newUser.name, this.newUser.age, this.newUser.city).subscribe()
   }
 
   goBack() {
-    this.location.back()
+    this.router.navigateByUrl('/list')
   }
 
   ngOnInit(): void {
