@@ -22,7 +22,7 @@ export class FormViewComponent implements OnInit {
   ){}
 
   addUser() {
-    this.userService.addUser(this.newUser.name, this.newUser.age, this.newUser.city).subscribe()
+    this.userService.addUser(this.newUser.name, this.newUser.age, this.newUser.city).subscribe(_ => this.goBack())
   }
 
   goBack() {
