@@ -10,6 +10,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class DetailViewComponent implements OnInit {
 
   user: User
+  isEditing: boolean = false
+  editedUser: User
 
   constructor(
     private userService: UserService,
@@ -19,15 +21,27 @@ export class DetailViewComponent implements OnInit {
 
   getUser() {
     const id = +this.route.snapshot.paramMap.get('id')
-    this.userService.getUserById(id).subscribe(result => this.user = result.data.user)
+    this.userService.getUserById(id).subscribe(result => {
+      this.user = result.data.user
+      this.editedUser = {...result.data.user}
+    })
   }
 
   deleteUser(user: User) {
-    this.userService.deleteUserById(user.id).subscribe()
+    this.userService.deleteUserById(user.id).subscribe(_ => this.goBack())
+  }
+
+  editUser() {
+    this.userService.editUser(this.editedUser).subscribe(_ => this.toggleEditing())
   }
 
   ngOnInit(): void {
     this.getUser()
+  }
+
+  toggleEditing() {
+    this.isEditing = !this.isEditing
+    this.editedUser = {...this.user}
   }
 
   goBack() {

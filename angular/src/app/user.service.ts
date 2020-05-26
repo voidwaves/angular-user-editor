@@ -60,6 +60,22 @@ const addUserMutation = gql`
   }
 `
 
+const editUserMutation = gql`
+  mutation editUser($id: Int, $name: String, $age: Int, $city: String) {
+    editUser(
+      id: $id
+      name: $name
+      age: $age
+      city: $city
+    ) {
+      id
+      name
+      age
+      city
+    }
+  }
+`
+
 @Injectable({
   providedIn: 'root'
 })
@@ -75,7 +91,6 @@ export class UserService {
   }
 
   getUserById(id: number): Observable<ApolloQueryResult<{user: User}>> {
-    console.log(id)
     return this.apollo.watchQuery<{user: User}>({
       query: queryUserById,
       variables: {id}
@@ -86,14 +101,29 @@ export class UserService {
   deleteUserById(id: number): Observable<FetchResult<User[]>> {
     return this.apollo.mutate<User[]>({
       mutation: removeUserMutation,
-      variables: {id}
+      variables: {id},
+      refetchQueries: [{query: queryAllUsers}]
     })
   }
 
   addUser(name: string, age: number, city: string): Observable<FetchResult<User>> {
     return this.apollo.mutate<User>({
       mutation: addUserMutation,
-      variables: {name, age, city}
+      variables: {name, age, city},
+      refetchQueries: [{query: queryAllUsers}]
+    })
+  }
+
+  editUser(user: User) {
+    return this.apollo.mutate<User>({
+      mutation: editUserMutation,
+      variables: {
+        id: user.id,
+        name: user.name,
+        age: user.age,
+        city: user.city
+      },
+      refetchQueries: [{query: queryAllUsers}]
     })
   }
 }

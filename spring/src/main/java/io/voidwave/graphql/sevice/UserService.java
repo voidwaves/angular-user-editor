@@ -43,4 +43,12 @@ public class UserService {
         userRepository.deleteById(id);
         return deletedUser;
     }
+
+    public User editUser(int id, String name, int age, String city) {
+        var editedUser = userRepository.findById(id);
+        editedUser.get().setName(name);
+        editedUser.get().setAge(age);
+        editedUser.get().setCity(city);
+        return userRepository.save(editedUser.get());
+    }
 }

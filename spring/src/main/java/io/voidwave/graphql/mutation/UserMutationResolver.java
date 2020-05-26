@@ -23,4 +23,8 @@ public class UserMutationResolver implements GraphQLMutationResolver {
     public Optional<User> removeUser(int id) {
         return userService.removeUser(id);
     }
+
+    public User editUser(int id, String name, int age, String city) {
+        return userService.editUser(id, name, age, city);
+    }
 }
