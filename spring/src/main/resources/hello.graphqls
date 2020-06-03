@@ -1,4 +1,11 @@
 
+input InputUser {
+    id: Int
+    name: String
+    age: Int
+    city: String
+}
+
 type User {
     id: Int
     name: String
@@ -12,8 +19,8 @@ type Query {
 }
 
 type Mutation {
-    addUser(name: String, age: Int, city: String): User
+    addUser(user: InputUser): User
     removeUser(id: Int): User
-    editUser(id: Int, name: String, age: Int, city: String): User
+    editUser(user: InputUser): User
 }
 

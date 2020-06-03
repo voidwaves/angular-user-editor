@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 import { Router } from '@angular/router'
-import { UserService } from '../user.service';
+import { UserService, User } from '../user.service';
 
 @Component({
   selector: 'app-form-view',
@@ -9,8 +9,7 @@ import { UserService } from '../user.service';
 })
 export class FormViewComponent implements OnInit {
 
-  newUser = {
-    id: 0,
+  newUser: User = {
     name: '',
     age: 0,
     city: ''
@@ -22,14 +21,14 @@ export class FormViewComponent implements OnInit {
   ){}
 
   addUser() {
-    this.userService.addUser(this.newUser.name, this.newUser.age, this.newUser.city).subscribe(_ => this.goBack())
+    console.log(this.newUser)
+    this.userService.addUser(this.newUser).subscribe(_ => this.goBack())
   }
 
   goBack() {
     this.router.navigateByUrl('/list')
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
   }
-
 }

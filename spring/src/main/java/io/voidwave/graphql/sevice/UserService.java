@@ -33,9 +33,8 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-    public User addUser(String name, int age, String city) {
-        var newUser = new User(name, age, city);
-        return userRepository.save(newUser);
+    public User addUser(User user) {
+        return userRepository.save(user);
     }
 
     public Optional<User> removeUser(int id) {
@@ -44,11 +43,13 @@ public class UserService {
         return deletedUser;
     }
 
-    public User editUser(int id, String name, int age, String city) {
-        var editedUser = userRepository.findById(id);
-        editedUser.get().setName(name);
-        editedUser.get().setAge(age);
-        editedUser.get().setCity(city);
+    public User editUser(User user) {
+        var editedUser = userRepository.findById(user.getId());
+        if(editedUser.isPresent()) {
+            editedUser.get().setName(user.getName());
+            editedUser.get().setAge(user.getAge());
+            editedUser.get().setCity(user.getCity());
+        }
         return userRepository.save(editedUser.get());
     }
 }

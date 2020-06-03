@@ -32,16 +32,22 @@ export class DetailViewComponent implements OnInit {
   }
 
   editUser() {
+    console.log(this.editedUser)
     this.userService.editUser(this.editedUser).subscribe(_ => this.toggleEditing())
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.getUser()
   }
 
   toggleEditing() {
     this.isEditing = !this.isEditing
-    this.editedUser = {...this.user}
+    this.editedUser = {
+      id: this.user.id,
+      name: this.user.name,
+      age: this.user.age,
+      city: this.user.city
+    }
   }
 
   goBack() {

@@ -6,7 +6,7 @@ import { ApolloQueryResult } from 'apollo-client';
 import { FetchResult } from 'apollo-link';
 
 export interface User {
-  id: number
+  id?: number
   name: string
   age: number
   city: string
@@ -46,12 +46,8 @@ const removeUserMutation = gql`
 `
 
 const addUserMutation = gql`
-  mutation addUser($name: String, $age: Int, $city: String) {
-    addUser(
-      name: $name
-      age: $age
-      city: $city
-    ) {
+  mutation addUser($user: InputUser) {
+    addUser(user: $user) {
       id
       name
       age
@@ -61,13 +57,8 @@ const addUserMutation = gql`
 `
 
 const editUserMutation = gql`
-  mutation editUser($id: Int, $name: String, $age: Int, $city: String) {
-    editUser(
-      id: $id
-      name: $name
-      age: $age
-      city: $city
-    ) {
+  mutation editUser($user: InputUser) {
+    editUser(user: $user) {
       id
       name
       age
@@ -91,38 +82,33 @@ export class UserService {
   }
 
   getUserById(id: number): Observable<ApolloQueryResult<{user: User}>> {
-    return this.apollo.watchQuery<{user: User}>({
+    return this.apollo.watchQuery<{user: User}, {id: number}>({
       query: queryUserById,
       variables: {id}
     })
     .valueChanges
   }
   
-  deleteUserById(id: number): Observable<FetchResult<User[]>> {
-    return this.apollo.mutate<User[]>({
+  deleteUserById(id: number): Observable<FetchResult<{data: User}>> {
+    return this.apollo.mutate<{data: User}, {id: number}>({
       mutation: removeUserMutation,
       variables: {id},
       refetchQueries: [{query: queryAllUsers}]
     })
   }
 
-  addUser(name: string, age: number, city: string): Observable<FetchResult<User>> {
-    return this.apollo.mutate<User>({
+  addUser(user: User): Observable<FetchResult<{data: User}>> {
+    return this.apollo.mutate<{data: User}, {user: User}>({
       mutation: addUserMutation,
-      variables: {name, age, city},
+      variables: {user},
       refetchQueries: [{query: queryAllUsers}]
     })
   }
 
-  editUser(user: User) {
-    return this.apollo.mutate<User>({
+  editUser(user: User): Observable<FetchResult<{data: User}>> {
+    return this.apollo.mutate<{data: User}, {user: User}>({
       mutation: editUserMutation,
-      variables: {
-        id: user.id,
-        name: user.name,
-        age: user.age,
-        city: user.city
-      },
+      variables: {user},
       refetchQueries: [{query: queryAllUsers}]
     })
   }
