@@ -1,0 +1,11 @@
+schema: ../resources/schema/masterdata.graphqls
+documents: ./src/**/*.graphql
+config:
+  scalars:
+    ID: number
+generates:
+  ./src/types.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-apollo-angular

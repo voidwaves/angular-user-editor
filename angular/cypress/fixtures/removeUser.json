@@ -1,0 +1,8 @@
+{
+    "removeUser": {
+        "id": 5, 
+        "name": "Dan",
+        "age": 23,
+        "city": "Los Angeles"
+    }
+}

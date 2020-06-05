@@ -21,7 +21,6 @@ export class FormViewComponent implements OnInit {
   ){}
 
   addUser() {
-    console.log(this.newUser)
     this.userService.addUser(this.newUser).subscribe(_ => this.goBack())
   }
 

@@ -14,6 +14,6 @@
 // ***********************************************************
 
 
-import './commands'
+
 import 'cypress-graphql-mock';
 

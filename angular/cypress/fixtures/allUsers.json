@@ -1,0 +1,28 @@
+{
+  "allUsers": [
+    {
+      "id": 1,
+      "name": "John",
+      "age": 22,
+      "city": "New York"
+    },
+    {
+      "id": 2,
+      "name": "Marry",
+      "age": 34,
+      "city": "Huston"
+    },
+    {
+      "id": 3,
+      "name": "Ben",
+      "age": 25,
+      "city": "Sydney"
+    },
+    {
+      "id": 4,
+      "name": "Harry",
+      "age": 45,
+      "city": "London"
+    }
+  ]
+}

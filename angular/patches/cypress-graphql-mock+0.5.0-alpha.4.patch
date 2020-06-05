@@ -1,0 +1,13 @@
+diff --git a/node_modules/cypress-graphql-mock/src/index.ts b/node_modules/cypress-graphql-mock/src/index.ts
+index aa04437..5b49b1d 100644
+--- a/node_modules/cypress-graphql-mock/src/index.ts
++++ b/node_modules/cypress-graphql-mock/src/index.ts
+@@ -166,7 +166,7 @@ Cypress.Commands.add("mockGraphql", (options?: MockGraphQLOptions) => {
+         }
+ 
+         return graphql({
+-          schema,
++          schema: executableSchema,
+           source: query,
+           variableValues: variables,
+           operationName,
